@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Turing Machine Simulator</title>
+
+	<!-- Bootstrap Core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="css/styles.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="">Turing Machine Simulator</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<a target="_blank" class="navbar-brand" href="https://github.com/pedro-cf">GitHub</a>
+				<a target="_blank" class="navbar-brand" href="http://en.wikipedia.org/wiki/Turing_machine">Wikipedia</a>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->
+	</nav>
+
+
+	<!-- Page Content -->
+	<div class="container">
+
+		<div class="row" style="padding-bottom:33px;">
+			<div class="col-lg-12 text-center">
+				<h1>Turing Machine Simulator</h1>
+				<hr>
+			</div>
+		</div>
+
+
+		<!-- /.row -->
+
+
+		<!-- Drop Zone -->
+		<div class="row upload-drop-zone pull-center" id="drop-zone" hidden>
+			<div id="fUp" class="fileUpload btn btn-primary">
+				<input type="file" class="upload" id="fileInput"><span>Select File</span></input>
+			</div>
+			<br>
+			Or drag and drop here
+		</div>
+
+		<script>
+			function textAreaAdjust(o) {
+				//o.style.height = "1px";
+				o.style.height = (25 + $("#inputText").val().lineCount() * 25) + "px";
+			}
+		</script>
+
+		<div id="texModeArea">
+
+			<button id="example1" class="btn btn-info pull-left"> Load Example </button>
+			<button id="clearText" class="btn btn-default pull-right"> Clear </button>
+			<textarea onkeyup="textAreaAdjust(this)" style="overflow:hidden" id="inputText" class="form-control"
+				rows="9" placeholder="Write TM code here OR drag and drop here."></textarea>
+
+
+			<button id="lexicalVerification" class="btn btn-primary pull-center"> Verify <span
+					class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></button>
+
+		</div>
+
+		<div id="verifyAlert" class="alert alert-warning" role="alert" hidden>
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		</div>
+
+		<div id="tmcontrolpanel" class="row" hidden>
+			<hr>
+
+			<div id="cpAlert" class="alert alert-warning" role="alert" hidden>
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			</div>
+
+			<div class="col-lg-2">
+				<div id="dataControl" class=" btn-group-vertical">
+					<button id="start" class="btn btn-default pull-left"> Start </button>
+					<button id="delete" class="btn btn-danger pull-left disabled"> Delete </button>
+					<button id="reset" class="btn btn-default pull-left disabled"> Reset </button>
+					<button id="next" class="btn btn-primary pull-left disabled"> Next </button>
+
+				</div>
+
+				<p id="resultp" class="pull-center">Status:</p>
+				<button id="result" class="btn btn-default"> Waiting </button>
+
+				<p id="resultp" class="pull-center">Current State:</p>
+				<button id="curState" class="btn btn-default"> &nbsp; </button>
+			</div>
+
+			<div class="col-lg-9">
+				<div class="row">
+					<div class="col-lg-10">
+						<font size="6">Input: </font> <input id="tminput" class="form-control" placeholder="TM Input"
+							type="text" style="display:inline;"></input>
+					</div>
+				</div>
+				<div class="row">
+					<ul id="tape" class="pagination pagination-lg pull-left">
+						<li><a>&nbsp;</a></li>
+						<li><a>&nbsp;</a></li>
+						<li><a>&nbsp;</a></li>
+						<li><a>&nbsp;</a></li>
+						<li><a>&nbsp;</a></li>
+						<li><a>&nbsp;</a></li>
+						<li><a>&nbsp;</a></li>
+						<li><a>&nbsp;</a></li>
+						<li><a>&nbsp;</a></li>
+					</ul>
+				</div>
+				<canvas id="canvas" width="800" height="600">
+					<span class="error">Your browser does not support<br>the HTML5 &lt;canvas&gt; element</span>
+				</canvas>
+
+				<div id="stats" class="pull-center">
+					<p class="center">
+						Stats
+					</p>
+					<p class="center">
+						Number of Steps: <label id="Steps">0</label>
+					</p>
+					<p class="center">
+						Number of States Iterated: <label id="States">0</label>
+					</p>
+				</div>
+
+				<div id="exportS" class="pull-center">
+					<p class="center">
+						Export as:
+						<a href="javascript:saveAsPNG()">PNG</a> |
+						<a href="javascript:saveAsLaTeX()">LaTeX</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<footer class="footer" style="margin-bottom:50px">
+			<div class="container">
+				<div class="row">
+					<div class="support-section">
+						<p>&copy; 2023 <a target="_blank" href="https://github.com/pedro-cf">pedro-cf</a></p>
+						<p>If you find this project useful, consider buying me a coffee! Donations help keep this
+							project going and are greatly appreciated.</p>
+						<a href="https://www.buymeacoffee.com/pedro_cf" target="_blank" rel="noopener">
+							<img src="https://img.shields.io/badge/-Buy%20me%20a%20coffee-orange?logo=buy-me-a-coffee&logoColor=white&style=for-the-badge"
+								alt="Buy me a coffee">
+						</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+
+
+	</div>
+	<!-- /.container -->
+
+	<!-- jQuery Version 1.11.1 -->
+	<script src="js/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!--  -->
+	<script src="js/node.js"></script>
+	<script src="js/link.js"></script>
+	<script src="js/self_link.js"></script>
+	<script src="js/start_link.js"></script>
+	<script src="js/temporary_link.js"></script>
+	<script src="js/latex.js"></script>
+	<script src="js/math.js"></script>
+	<script src="js/save.js"></script>
+	<script src="js/fsm.js"></script>
+	<script src="js/turing.js"></script>
+	<script src="js/upload.js"></script>
+	<script src="js/core.js"></script>
+	<script src="js/parser.js"></script>
+	<script src="js/mode.js"></script>
+
+</body>
+
+</html>
