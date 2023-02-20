@@ -2,6 +2,9 @@
 
 The Turing Machine Simulator is a web-based tool for simulating Turing machines. This simulator is built using HTML, JavaScript, and Bootstrap, and it provides a simple and intuitive interface for designing and running Turing machines. It also includes a language parser/compiler for parsing Turing machine definitions.
 
+![image](https://user-images.githubusercontent.com/4175430/220098764-acd26070-3d5a-4dfa-a679-8b2a95641974.png)
+
+
 ## Usage
 
 To use the Turing Machine Simulator, you can simply access the GitHub page:
